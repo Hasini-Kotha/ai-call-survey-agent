@@ -1,0 +1,15 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Secrets
+.env
+serviceAccountKey.json
+
+# Binaries
+ngrok.exe
+
+# OS junk
+.DS_Store
+Thumbs.db
