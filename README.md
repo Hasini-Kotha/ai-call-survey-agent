@@ -9,20 +9,20 @@ Built for real-world customer feedback collection.
 
  Features
 
-- 📞 **Automated Voice Calls** using Twilio
-- 🧠 **Real-time Conversational AI** powered by Groq LLM
-- 🎙️ **Speech-to-Text (STT)** and **Text-to-Speech (TTS)** via Twilio
-- 🔁 **Dynamic Question Flow** based on product type and user responses
-- ⏰ **Scheduled Outbound Calls** using background cron jobs
-- 🔥 **Firebase Firestore** for call scheduling and status tracking
-- 🌐 **Flask-based Backend API**
+- **Automated Voice Calls** using Twilio
+-  **Real-time Conversational AI** powered by Groq LLM
+-  **Speech-to-Text (STT)** and **Text-to-Speech (TTS)** via Twilio
+-  **Dynamic Question Flow** based on product type and user responses
+-  **Scheduled Outbound Calls** using background cron jobs
+-  **Firebase Firestore** for call scheduling and status tracking
+-  **Flask-based Backend API**
 
 ---
 
  How It Works
 
 1. Phone numbers and call schedules are stored in **Firebase Firestore**
-2. A background scheduler checks for due calls every minute
+2. A background cron scheduler checks for due calls every minute
 3. When a call is due:
    - Twilio initiates an outbound call
    - The call connects to the Flask `/voice` webhook
@@ -49,13 +49,11 @@ Built for real-world customer feedback collection.
 
 ai-call-survey-agent/
 │
-├── app.py # Main Flask application
+├── server.py # Main Flask application
 ├── .env.example # Environment variable template
 ├── requirements.txt # Python dependencies
 └── README.md
 
-yaml
-Copy code
 
 ---
  Environment Variables
@@ -72,8 +70,7 @@ GROQ_API_KEY=
 GOOGLE_APPLICATION_CREDENTIALS=
 PORT=5000
 
-yaml
-Copy code
+
 
 
 
