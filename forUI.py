@@ -23,7 +23,7 @@ PUBLIC_URL = os.getenv("PUBLIC_URL")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 if not PUBLIC_URL:
-    raise Exception("❌ PUBLIC_URL missing in .env — start ngrok and add PUBLIC_URL")
+    raise Exception(" PUBLIC_URL missing in .env — start ngrok and add PUBLIC_URL")
 
 # ----------------------------
 # Firebase Init
@@ -223,17 +223,17 @@ def cron_job():
                     data = doc.to_dict()
                     phone = data["phoneNumber"]
 
-                    print("📞 Due call found for:", phone)
+                    print("Due call found for:", phone)
                     make_call(phone)
 
                     db.collection("scheduledCalls").document(doc.id).update({
                         "status": "processed"
                     })
 
-                    print("✔️ Call marked processed.")
+                    print("Call marked processed.")
 
         except Exception as e:
-            print("❌ Cron error:", e)
+            print("Cron error:", e)
 
         time.sleep(60)
 
@@ -243,5 +243,5 @@ def cron_job():
 # ----------------------------
 if __name__ == "__main__":
     threading.Thread(target=cron_job, daemon=True).start()
-    print("🚀 Flask server running on port", PORT)
+    print(" Flask server running on port", PORT)
     app.run(host="0.0.0.0", port=PORT)
