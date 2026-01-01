@@ -34,7 +34,7 @@ Built for real-world customer feedback collection.
 
 ---
 
- 🛠️ Tech Stack
+  Tech Stack
 
 - **Backend:** Python, Flask  
 - **Voice & Telephony:** Twilio (Voice, STT, TTS)  
