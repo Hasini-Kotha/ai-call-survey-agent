@@ -30,7 +30,7 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 GROQ_MODEL = "llama-3.1-8b-instant"  # good fast model
 
 if not all([TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE, PUBLIC_URL, GROQ_API_KEY]):
-    print("❌ ERROR: Missing one or more required env vars. Check .env file.")
+    print("ERROR: Missing one or more required env vars. Check .env file.")
     exit(1)
 
 # Firebase
@@ -109,14 +109,14 @@ def generate_ai_reply(call_sid: str, user_text: str) -> str:
         )
         reply = chat_completion.choices[0].message.content.strip()
     except Exception as e:
-        print("❌ Error calling Groq:", e)
+        print(" Error calling Groq:", e)
         reply = "Sorry, I am having trouble right now. We will contact you again later."
 
     # store assistant message and trim history
     conversations[call_sid].append({"role": "assistant", "content": reply})
     conversations[call_sid] = conversations[call_sid][-10:]
 
-    print("🤖 Arjun:", reply)
+    print("Arjun:", reply)
     return reply
 
 
@@ -128,14 +128,14 @@ app = Flask(__name__)
 
 @app.get("/")
 def health():
-    return "✅ Python AI Call Survey Agent (Twilio + Groq + Firestore) is running."
+    return "Python AI Call Survey Agent (Twilio + Groq + Firestore) is running."
 
 
 # 4) When call connects: /voice
 @app.post("/voice")
 def voice():
     call_sid = request.form.get("CallSid", "unknown")
-    print(f"📞 /voice webhook for CallSid={call_sid}")
+    print(f" /voice webhook for CallSid={call_sid}")
 
     if call_sid not in conversations:
         conversations[call_sid] = [{"role": "system", "content": SYSTEM_PROMPT}]
@@ -217,9 +217,9 @@ def make_call(phone_number: str):
             url=f"{PUBLIC_URL}/voice",
             timeout=30,
         )
-        print("✅ Call initiated, SID:", call.sid)
+        print("Call initiated, SID:", call.sid)
     except Exception as e:
-        print("❌ Error making call:", e)
+        print(" Error making call:", e)
 
 
 def check_scheduled_calls():
@@ -243,7 +243,7 @@ def check_scheduled_calls():
         for doc in docs:
             data = doc.to_dict()
             phone = data.get("phoneNumber")
-            print("📞 Due call found for:", phone)
+            print(" Due call found for:", phone)
             if phone:
                 make_call(phone)
                 doc.reference.update({"status": "processed"})
@@ -254,7 +254,7 @@ def check_scheduled_calls():
         else:
             print("No pending calls at this time.")
     except Exception as e:
-        print("❌ Error in cron job:", e)
+        print("Error in cron job:", e)
 
 
 # -----------------------------
@@ -266,5 +266,5 @@ if __name__ == "__main__":
     scheduler.add_job(check_scheduled_calls, "interval", minutes=1)
     scheduler.start()
 
-    print(f"🚀 Flask server running on port {PORT}")
+    print(f" Flask server running on port {PORT}")
     app.run(host="0.0.0.0", port=PORT)
